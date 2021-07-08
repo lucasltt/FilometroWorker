@@ -11,5 +11,5 @@
 - mysql
 
 
-## Screenhot
-![](https://github.com/lucasltt/FilometroWorker/raw/master/img/tlegram.jpeg)
+## Screenshot
+![](https://raw.githubusercontent.com/lucasltt/FilometroWorker/master/img/telegram.jpeg)
