@@ -19,7 +19,7 @@ namespace FilometroWorker
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private readonly TelegramBotClient telegramBot = new TelegramBotClient("YOUTELEGRAMTOKENHERE");
+        private readonly TelegramBotClient telegramBot = new TelegramBotClient("1878710359:AAFwPsHtxE62GTimYmZqXbhEC6fjfc413QU");
         private readonly VacinacaoController vacinacaoController = new();
 
         private static List<PostoVacinacao> postosVacinacao = new();

@@ -81,15 +81,24 @@ namespace FilometroWorker.Controllers
         public List<ReplyMessage> GetNotifications(List<PostoVacinacao> modifiedData)
         {
             List<ReplyMessage> replyMessages = new();
+            StringBuilder stringBuilder;
 
             foreach (PostoVacinacao posto in modifiedData)
             {
                 List<Subscription> subscriptions = DatabaseConnector.GetSubscriptionsByPosto(posto.equipamento);
                 foreach (Subscription subscription in subscriptions)
                 {
-                    string body = $"Olá {subscription.Username}, o posto {subscription.NomePosto} foi atualizado.\n";
-                    body += posto.data_hora + "\n" + posto.status_fila;
-                    replyMessages.Add(new ReplyMessage(body, subscription.ChatId));
+                    stringBuilder = new();
+                    stringBuilder.AppendLine($"Olá {subscription.Username}, o posto {subscription.NomePosto} foi atualizado.");
+                    stringBuilder.AppendLine(posto.data_hora);
+                    stringBuilder.AppendLine(posto.status_fila);
+                    if (posto.astrazeneca?.Equals("1") == true)
+                        stringBuilder.AppendLine("Astrazeneca Disponível");
+                    if (posto.pfizer?.Equals("1") == true)
+                        stringBuilder.AppendLine("Pfizer Disponível");
+                    if (posto.coronavac?.Equals("1") == true)
+                        stringBuilder.AppendLine("Coronavac Disponível");
+                    replyMessages.Add(new ReplyMessage(stringBuilder.ToString(), subscription.ChatId));
                 }
             }
 
@@ -165,6 +174,12 @@ namespace FilometroWorker.Controllers
                 stringBuilder.AppendLine(posto.endereco);
                 stringBuilder.AppendLine(posto.data_hora);
                 stringBuilder.AppendLine(posto.status_fila);
+                if (posto.astrazeneca?.Equals("1") == true)
+                    stringBuilder.AppendLine("Astrazeneca Disponível");
+                if (posto.pfizer?.Equals("1") == true)
+                    stringBuilder.AppendLine("Pfizer Disponível");
+                if (posto.coronavac?.Equals("1") == true)
+                    stringBuilder.AppendLine("Coronavac Disponível");
             }
 
             return posto is not null ? stringBuilder.ToString() : "Sem Resultados!";
